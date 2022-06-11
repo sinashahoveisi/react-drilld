@@ -1,2 +1,2 @@
-export { default as Hello } from './hello';
-export * from './hello';
+export { default as DrillD } from './DrillD';
+export * from './DrillD';

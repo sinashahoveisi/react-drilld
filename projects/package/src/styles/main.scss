@@ -1,0 +1,67 @@
+@import 'variables';
+
+.container {
+  box-sizing: border-box;
+  background-color: $colorBody;
+  min-height: 300px;
+  padding: 0.5rem 1rem;
+  height: 50vh;
+  max-height: 500px;
+  min-width: 200px;
+  width: 40vw;
+  max-width: 300px;
+
+  & > .header {
+    display: flex;
+    flex-direction: column;
+
+    & > h4 {
+      border-bottom: $colorGrayMid 1px solid;
+      text-align: center;
+    }
+
+    .back-button {
+      text-align: left;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      border-bottom: $colorGrayMid 1px solid;
+    }
+
+    ul.full-path-container {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+
+      li {
+        width: fit-content;
+        display: flex;
+        color: $colorGrayLight;
+        :not(:last-child):after{
+          content: '/';
+          padding: 0 0.2rem;
+        }
+      }
+    }
+
+  }
+}
+
+.folder-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: $colorGrayDark 1px solid;
+
+  .folder-name {
+    color: $colorPen;
+
+    & > span {
+      padding: 0 0.2rem;
+    }
+  }
+
+}
