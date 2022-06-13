@@ -1,2 +1,2 @@
-export { default as DrillD } from './DrillD';
+export {default as DrillD} from './DrillD';
 export * from './DrillD';

@@ -18,15 +18,15 @@
     "clean:all": "lerna clean",
     "watch": "lerna run watch --scope react-drilld",
     "package": "lerna exec --scope react-drilld -- npm pack",
-    "lint": "eslint --fix --ext .ts,.tsx,.js,.json",
+    "lint": "eslint ./projects --fix --ext .ts,.tsx,.js,.json",
     "pretty": "prettier --write .",
     "precommit": "npx lint-staged",
     "prepare": "husky install",
     "preinstall": "echo 'install package for companext project'"
   },
   "devDependencies": {
-    "@types/react": "^18.0.12",
-    "@types/react-dom": "^18.0.5",
+    "@types/react": "^17.0.40",
+    "@types/react-dom": "^18.0.4",
     "lerna": "^5.0.0",
     "prettier": "^2.6.2",
     "react": "^18.1.0",
