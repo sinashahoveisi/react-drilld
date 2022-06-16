@@ -6,7 +6,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <DrillD title="sina" folders={[{name: 'sina', children: [{name: 'sina2'}, {name: 'sina3'}]}]} />
+        {/*<DrillD title="sina" folders={[{name: 'sina', children: [{name: 'sina2'}, {name: 'sina3'}]}]} />*/}
+        <DrillD
+          title="sina"
+          showFullPath
+          folders={[{name: 'sina', children: [{name: 'sina2', children: [{name: 'ali'}]}, {name: 'sina3'}]}]}
+        />
       </header>
     </div>
   );

@@ -1,0 +1,22 @@
+@import 'variables';
+
+.drilld {
+  button {
+    color: $colorPen;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: $colorPen;
+    margin: 5px 0;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    font-size: 0.9rem;
+  }
+}

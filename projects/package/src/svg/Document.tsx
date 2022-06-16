@@ -6,6 +6,7 @@ const Document: FC = () => (
     height={30}
     width={30}
     fill="none"
+    color="red"
     viewBox="0 0 24 24"
     stroke="currentColor"
     strokeWidth={2}>

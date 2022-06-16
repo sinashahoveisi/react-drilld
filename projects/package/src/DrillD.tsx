@@ -41,27 +41,30 @@ const DrillD: FC<DrillDProps> = ({
   }, []);
 
   return (
-    <div className={clsx('drilld-container', containerClassName)}>
-      <div className="drilld-header">
+    <div className={clsx('container drilld', containerClassName)}>
+      <div className="header">
         <h4>{title}</h4>
-        <button className="drilld-back-button" onClick={popDepth}>
-          <Back />
-          <span>{showFullPath ? backTitle : last(depth)?.name}</span>
-        </button>
-        {showFullPath && (
-          <ul className="drilld-full-path-container">
-            {map(depth, (folder: FolderProps) => (
-              <li>{folder?.name}</li>
-            ))}
-          </ul>
-        )}
+        <div className="header-action">
+          {!!depth?.length && (
+            <button className="back-button" onClick={popDepth}>
+              <Back />
+              <span>{showFullPath ? backTitle : last(depth)?.name}</span>
+            </button>
+          )}
+          {showFullPath && (
+            <ul className="full-path-container">
+              {map(depth, (folder: FolderProps) => (
+                <li>
+                  <span>{folder?.name}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
       {map(last(depth)?.children || folders, (folder: FolderProps) => (
-        <button
-          type="button"
-          className={clsx('drilld-folder-item', folderClassName)}
-          onClick={() => pushToDepth(folder)}>
-          <div className="drilld-folder-name">
+        <button type="button" className={clsx('folder-container', folderClassName)} onClick={() => pushToDepth(folder)}>
+          <div className="folder-name">
             {folder?.children || folder?.isFolder ? <Folder /> : <Document />}
             <span>{folder?.name}</span>
           </div>

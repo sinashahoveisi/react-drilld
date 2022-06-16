@@ -3,9 +3,10 @@ import {FC} from 'react';
 const Folder: FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    height={30}
-    width={30}
+    height={27}
+    width={27}
     fill="none"
+    color="#FA7121"
     viewBox="0 0 24 24"
     stroke="currentColor"
     strokeWidth={2}>

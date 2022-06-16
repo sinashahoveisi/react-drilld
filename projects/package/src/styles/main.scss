@@ -1,67 +1,103 @@
 @import 'variables';
+@import 'normalize';
 
-.drilld-container {
+.drilld.container {
   box-sizing: border-box;
   background-color: $colorBody;
   min-height: 300px;
+  border-radius: 10px;
   padding: 0.5rem 1rem;
-  height: 50vh;
+  height: 70vh;
   max-height: 500px;
   min-width: 200px;
-  width: 40vw;
-  max-width: 300px;
+  width: 50vw;
+  max-width: 380px;
 
-  & > .drilld-header {
+  & > .header {
     display: flex;
     flex-direction: column;
+    margin-bottom: 5px;
+    border-bottom: $colorGrayMid 2px solid;
 
     & > h4 {
-      border-bottom: $colorGrayMid 1px solid;
       text-align: center;
     }
 
-    .drilld-back-button {
+    .header-action {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .back-button {
       text-align: left;
       display: flex;
       flex-direction: row;
-      justify-content: flex-end;
+      justify-content: flex-start;
       align-items: center;
-      border-bottom: $colorGrayMid 1px solid;
     }
 
-    ul.drilld-full-path-container {
+    ul.full-path-container {
       display: flex;
-      flex-wrap: wrap;
+      flex-grow: 1;
+      flex-wrap: nowrap;
+      overflow: auto;
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
+      padding: 0 5px;
+      border-left: 2px $colorGrayDark solid;
 
       li {
         width: fit-content;
         display: flex;
-        color: $colorGrayLight;
-        :not(:last-child):after{
+        color: $colorGrayMid;
+        &:not(:last-child):after{
           content: '/';
           padding: 0 0.2rem;
         }
       }
     }
-
   }
-}
 
-.drilld-folder-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border-bottom: $colorGrayDark 1px solid;
+  .folder-container {
+    display: flex;
+    width: 100%;
+    padding: 7px 5px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 
-  .drilld-folder-name {
-    color: $colorPen;
+    .folder-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $colorPen;
 
-    & > span {
-      padding: 0 0.2rem;
+      & > span {
+        padding: 0 0.2rem;
+      }
     }
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0.3em;
+    height: 0.3em;
+    background: transparent;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(128, 128, 128, 0.3);
+    opacity: 0.3;
+    border-radius: 10px;
   }
 
 }
