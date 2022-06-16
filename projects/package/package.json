@@ -26,7 +26,7 @@
     "file structure",
     "drilld"
   ],
-  "author": "PhatNguyen <phatnt.uit@gmail.com> (https://phatnguyenuit.github.io)",
+  "author": "Sina Shahoveisi <shahoveisysina@yahoo.com> (https://sinashahoveisi.github.io)",
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.1.0",
@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "clsx": "^1.1.1",
+    "axios": "^0.27.2",
     "lodash": "^4.17.21"
   }
 }
