@@ -1,0 +1,47 @@
+@import 'variables';
+
+.drilld {
+  .checkbox-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem;
+
+    input[type=checkbox].checkbox-input {
+      position: absolute;
+      height: 15px;
+      width: 15px;
+      opacity: 0;
+    }
+    .checkbox-shape {
+      display: flex;
+      height: 12px;
+      width: 12px;
+      flex-shrink: 0;
+      align-items: center;
+      border-radius: 15px;
+      border: #61dafb 5px solid;
+      background-color: white;
+      margin-right: 0.5rem;
+      :focus-within {
+        border-color: #204954;
+      }
+
+    & > svg {
+      pointer-events: none;
+      display: none;
+      height: 5px;
+      width: 5px;
+      color: #204954;
+      fill: currentColor;
+      }
+    }
+
+    .checkbox-label {
+      font-size: 10px;
+      padding: 0 5px;
+      user-select: none;
+    }
+
+  }
+}

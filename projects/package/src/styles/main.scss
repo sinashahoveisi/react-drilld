@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'normalize';
 @import 'animations';
+@import 'components';
 
 .drilld.container {
   display: flex;
@@ -69,7 +70,7 @@
     overflow-y: auto;
   }
 
-  .folder-container {
+  div.folder-container {
     display: flex;
     width: 100%;
     padding: 7px 5px;

@@ -42,7 +42,9 @@ export interface DrillDProps {
   containerClassName?: string;
   backTitle?: string;
   url?: string;
-  headerRequest: HeadersInit;
+  mode?: 'single' | 'multiple';
+  isSelectableFolder?: boolean;
+  headerRequest?: HeadersInit;
   selectFolderQueryParams?: (folder: any) => object;
   fetchedChildrenDataPath?: onAfterGetChildren | string[] | string;
   isFolderProps?: checkIsFolder | string[] | string;
@@ -55,6 +57,8 @@ const DrillD: FC<DrillDProps> = ({
   containerClassName,
   showFullPath,
   backTitle = 'back',
+  mode = 'single',
+  isSelectableFolder,
   url,
   headerRequest,
   selectFolderQueryParams = (folder: any) => folder?.id,
@@ -138,17 +142,17 @@ const DrillD: FC<DrillDProps> = ({
               ? isFolderProps(folder)
               : get(folder, isFolderProps) || folder?.children;
             return (
-              <button
-                type="button"
-                key={index}
-                className={clsx('folder-container', folderClassName)}
-                onClick={() => pushToDepth(folder, index)}>
+              <div key={index} className={clsx('folder-container', folderClassName)}>
                 <div className="folder-name">
                   {isFolder ? <Folder /> : <Document />}
                   <span>{folder?.name}</span>
                 </div>
-                {isFolder && <Forward />}
-              </button>
+                {isFolder && (
+                  <button type="button" onClick={() => pushToDepth(folder, index)}>
+                    <Forward />
+                  </button>
+                )}
+              </div>
             );
           })
         )}
