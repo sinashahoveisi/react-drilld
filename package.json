@@ -2,7 +2,12 @@
   "name": "@react-drilld/root",
   "private": true,
   "description": "The best DrillDown package for react",
-  "keywords": ["react", "drill down", "drilld", "folder structure"],
+  "keywords": [
+    "react",
+    "drill down",
+    "drilld",
+    "folder structure"
+  ],
   "author": "SinaShahoveisi <shahoveisysina@yahoo.com> (https://sinashahoveisi.github.io)",
   "workspaces": [
     "projects/*"
@@ -25,14 +30,10 @@
     "preinstall": "echo 'install package for companext project'"
   },
   "devDependencies": {
-    "@types/react": "^17.0.40",
-    "@types/react-dom": "^18.0.4",
-    "lerna": "^5.0.0",
-    "prettier": "^2.6.2",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
+    "@types/react": "^17.0.40",
+    "@types/react-dom": "^18.0.4",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "babel-eslint": "^10.1.0",
@@ -52,6 +53,10 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "husky": "^7.0.0"
+    "husky": "^7.0.0",
+    "lerna": "^5.0.0",
+    "prettier": "^2.6.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }

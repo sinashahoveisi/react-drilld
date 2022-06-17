@@ -1,6 +1,5 @@
 import {FC, useCallback, useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
-import axios, {AxiosRequestHeaders, AxiosResponse} from 'axios';
 import {
   cloneDeepWith,
   flatMapDeep,
@@ -32,13 +31,13 @@ export type onAfterGetChildren = (fetchedFoldersData: any) => Array<FolderProps>
 
 export interface DrillDProps {
   title?: string;
-  folders: FolderProps[];
+  folders?: FolderProps[];
   showFullPath?: boolean;
   folderClassName?: string;
   containerClassName?: string;
   backTitle?: string;
   url?: string;
-  headerRequest: AxiosRequestHeaders;
+  headerRequest: HeadersInit;
   selectFolderQueryParams?: (folder: any) => object;
   fetchedChildrenDataPath?: onAfterGetChildren | string[] | string;
 }
@@ -52,8 +51,8 @@ const DrillD: FC<DrillDProps> = ({
   backTitle = 'back',
   url,
   headerRequest,
-  selectFolderQueryParams,
-  fetchedChildrenDataPath
+  selectFolderQueryParams = (folder: any) => folder?.id,
+  fetchedChildrenDataPath = 'data'
 }) => {
   const [depth, setDepth] = useState<FolderDepthProps[]>([]);
   const [fetchedFolders, setFetchedFolders] = useState<FolderProps[]>([]);
@@ -66,36 +65,34 @@ const DrillD: FC<DrillDProps> = ({
     setDepth((prevState) => dropRight(prevState));
   }, []);
 
-  const foldersChildren = useMemo(
-    () =>
-      get(
-        url ? fetchedFolders : folders,
-        flatMapDeep(depth, (depthItem: FolderDepthProps) => [depthItem.index, 'children'])
-      ),
-    [depth, fetchedFolders]
-  );
+  const foldersChildren = useMemo(() => {
+    const path = flatMapDeep(depth, (depthItem: FolderDepthProps) => [depthItem.index, 'children']);
+    if (path?.length) return get(url ? fetchedFolders : folders, path);
+    return url ? fetchedFolders : folders;
+  }, [depth, fetchedFolders]);
 
   useEffect(() => {
     if (url && selectFolderQueryParams) {
       const queryFolder = selectFolderQueryParams(last(depth));
-      axios
-        .get(url, {
-          headers: merge(headerRequest || {}, {params: queryFolder})
-        })
-        .then((children: AxiosResponse<any>) => {
+      fetch(url, {
+        headers: merge(headerRequest || {}, {params: queryFolder})
+      })
+        .then((response) => response.json())
+        .then((children: any) => {
           const childrenFolder = isFunction(fetchedChildrenDataPath)
             ? fetchedChildrenDataPath(children)
-            : get(children, fetchedChildrenDataPath || 'data');
+            : get(children, fetchedChildrenDataPath);
+          const path = flatMapDeep(depth, (depthItem: FolderDepthProps) => [depthItem.index, 'children']);
           const newFetchedFolders = cloneDeepWith(fetchedFolders, (copyFetchedFolders: FolderProps[]) => {
-            set(
-              copyFetchedFolders,
-              flatMapDeep(depth, (depthItem: FolderDepthProps) => [depthItem.index, 'children']),
-              childrenFolder
-            );
-            return copyFetchedFolders;
+            if (path?.length) {
+              set(copyFetchedFolders, path, childrenFolder);
+              return copyFetchedFolders;
+            }
+            return childrenFolder;
           });
           setFetchedFolders(newFetchedFolders);
-        });
+        })
+        .catch(console.error);
     }
   }, [depth]);
 
@@ -112,8 +109,8 @@ const DrillD: FC<DrillDProps> = ({
           )}
           {showFullPath && (
             <ul className="full-path-container">
-              {map(depth, (folder: FolderProps) => (
-                <li>
+              {map(depth, (folder: FolderProps, index: number) => (
+                <li key={index}>
                   <span>{folder?.name}</span>
                 </li>
               ))}
@@ -127,6 +124,7 @@ const DrillD: FC<DrillDProps> = ({
         map(foldersChildren, (folder: FolderProps, index: number) => (
           <button
             type="button"
+            key={index}
             className={clsx('folder-container', folderClassName)}
             onClick={() => pushToDepth(folder, index)}>
             <div className="folder-name">
