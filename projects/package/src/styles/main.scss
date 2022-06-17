@@ -3,6 +3,8 @@
 @import 'animations';
 
 .drilld.container {
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   background-color: $colorBody;
   min-height: 300px;
@@ -60,6 +62,11 @@
         }
       }
     }
+  }
+
+  & > .body {
+    flex-grow: 1;
+    overflow-y: auto;
   }
 
   .folder-container {

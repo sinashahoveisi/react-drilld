@@ -1,7 +1,6 @@
 import {FC, useCallback, useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import {
-  cloneDeepWith,
   flatMapDeep,
   get,
   isFunction,
@@ -11,7 +10,11 @@ import {
   dropRight,
   last,
   merge,
-  isUndefined
+  isUndefined,
+  forEach,
+  entries,
+  isNil,
+  cloneWith
 } from 'lodash';
 import {Back, Folder, Document, Forward, Spinner} from 'svg';
 import './styles/main.scss';
@@ -29,6 +32,8 @@ export interface FolderDepthProps {
 
 export type onAfterGetChildren = (fetchedFoldersData: any) => Array<FolderProps>;
 
+export type checkIsFolder = (folder: any) => boolean;
+
 export interface DrillDProps {
   title?: string;
   folders?: FolderProps[];
@@ -40,6 +45,7 @@ export interface DrillDProps {
   headerRequest: HeadersInit;
   selectFolderQueryParams?: (folder: any) => object;
   fetchedChildrenDataPath?: onAfterGetChildren | string[] | string;
+  isFolderProps?: checkIsFolder | string[] | string;
 }
 
 const DrillD: FC<DrillDProps> = ({
@@ -52,7 +58,8 @@ const DrillD: FC<DrillDProps> = ({
   url,
   headerRequest,
   selectFolderQueryParams = (folder: any) => folder?.id,
-  fetchedChildrenDataPath = 'data'
+  fetchedChildrenDataPath = 'data',
+  isFolderProps = 'isFolder'
 }) => {
   const [depth, setDepth] = useState<FolderDepthProps[]>([]);
   const [fetchedFolders, setFetchedFolders] = useState<FolderProps[]>([]);
@@ -72,10 +79,14 @@ const DrillD: FC<DrillDProps> = ({
   }, [depth, fetchedFolders]);
 
   useEffect(() => {
-    if (url && selectFolderQueryParams) {
+    if (url && selectFolderQueryParams && !foldersChildren) {
+      const fetchUrl = new URL(url);
       const queryFolder = selectFolderQueryParams(last(depth));
-      fetch(url, {
-        headers: merge(headerRequest || {}, {params: queryFolder})
+      forEach(entries(queryFolder), ([key, value]: [string, any]) => {
+        if (!isNil(value)) fetchUrl.searchParams.append(key, value);
+      });
+      fetch(fetchUrl, {
+        headers: headerRequest
       })
         .then((response) => response.json())
         .then((children: any) => {
@@ -83,7 +94,7 @@ const DrillD: FC<DrillDProps> = ({
             ? fetchedChildrenDataPath(children)
             : get(children, fetchedChildrenDataPath);
           const path = flatMapDeep(depth, (depthItem: FolderDepthProps) => [depthItem.index, 'children']);
-          const newFetchedFolders = cloneDeepWith(fetchedFolders, (copyFetchedFolders: FolderProps[]) => {
+          const newFetchedFolders = cloneWith([...(fetchedFolders || [])], (copyFetchedFolders: FolderProps[]) => {
             if (path?.length) {
               set(copyFetchedFolders, path, childrenFolder);
               return copyFetchedFolders;
@@ -118,23 +129,30 @@ const DrillD: FC<DrillDProps> = ({
           )}
         </div>
       </div>
-      {isUndefined(foldersChildren) && url ? (
-        <Spinner />
-      ) : (
-        map(foldersChildren, (folder: FolderProps, index: number) => (
-          <button
-            type="button"
-            key={index}
-            className={clsx('folder-container', folderClassName)}
-            onClick={() => pushToDepth(folder, index)}>
-            <div className="folder-name">
-              {folder?.children || folder?.isFolder ? <Folder /> : <Document />}
-              <span>{folder?.name}</span>
-            </div>
-            {(folder?.children || folder?.isFolder) && <Forward />}
-          </button>
-        ))
-      )}
+      <div className="body">
+        {isUndefined(foldersChildren) && url ? (
+          <Spinner />
+        ) : (
+          map(foldersChildren, (folder: FolderProps, index: number) => {
+            const isFolder = isFunction(isFolderProps)
+              ? isFolderProps(folder)
+              : get(folder, isFolderProps) || folder?.children;
+            return (
+              <button
+                type="button"
+                key={index}
+                className={clsx('folder-container', folderClassName)}
+                onClick={() => pushToDepth(folder, index)}>
+                <div className="folder-name">
+                  {isFolder ? <Folder /> : <Document />}
+                  <span>{folder?.name}</span>
+                </div>
+                {isFolder && <Forward />}
+              </button>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 };
