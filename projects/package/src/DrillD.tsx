@@ -14,8 +14,11 @@ import {
   forEach,
   entries,
   isNil,
-  cloneWith
+  cloneWith,
+  some,
+  remove
 } from 'lodash';
+import {CheckBox} from 'components';
 import {Back, Folder, Document, Forward, Spinner} from 'svg';
 import './styles/main.scss';
 
@@ -47,7 +50,11 @@ export interface DrillDProps {
   headerRequest?: HeadersInit;
   selectFolderQueryParams?: (folder: any) => object;
   fetchedChildrenDataPath?: onAfterGetChildren | string[] | string;
-  isFolderProps?: checkIsFolder | string[] | string;
+  labelKey?: string[] | string;
+  valueKey?: string[] | string;
+  folderKey?: checkIsFolder | string[] | string;
+  defaultValue?: FolderProps[];
+  checkIsSelected?: (folder: any) => boolean;
 }
 
 const DrillD: FC<DrillDProps> = ({
@@ -57,16 +64,21 @@ const DrillD: FC<DrillDProps> = ({
   containerClassName,
   showFullPath,
   backTitle = 'back',
+  defaultValue,
+  checkIsSelected,
+  valueKey = 'id',
+  labelKey = 'name',
   mode = 'single',
   isSelectableFolder,
   url,
   headerRequest,
   selectFolderQueryParams = (folder: any) => folder?.id,
   fetchedChildrenDataPath = 'data',
-  isFolderProps = 'isFolder'
+  folderKey = 'isFolder'
 }) => {
   const [depth, setDepth] = useState<FolderDepthProps[]>([]);
   const [fetchedFolders, setFetchedFolders] = useState<FolderProps[]>([]);
+  const [selectFolders, setSelectFolders] = useState<FolderProps[]>(defaultValue || []);
 
   const pushToDepth = useCallback((item: FolderProps, index: number) => {
     setDepth((prevState) => concat(prevState, merge(item, {index})));
@@ -111,6 +123,17 @@ const DrillD: FC<DrillDProps> = ({
     }
   }, [depth]);
 
+  const onSelectFolder = (folder: FolderProps, checked: boolean) => {
+    if (checked) setSelectFolders((prevState) => (mode === 'multiple' ? [...prevState, folder] : [folder]));
+    else {
+      const newSelectedItem = cloneWith(selectFolders, (copySelectFolder: FolderProps[]) => {
+        remove(copySelectFolder, (copyFolder: FolderProps) => get(copyFolder, valueKey) === get(folder, valueKey));
+        return copySelectFolder;
+      });
+      setSelectFolders(newSelectedItem);
+    }
+  };
+
   return (
     <div className={clsx('drilld container', containerClassName)}>
       <div className="header">
@@ -138,14 +161,25 @@ const DrillD: FC<DrillDProps> = ({
           <Spinner />
         ) : (
           map(foldersChildren, (folder: FolderProps, index: number) => {
-            const isFolder = isFunction(isFolderProps)
-              ? isFolderProps(folder)
-              : get(folder, isFolderProps) || folder?.children;
+            const isFolder = isFunction(folderKey) ? folderKey(folder) : get(folder, folderKey) || folder?.children;
             return (
               <div key={index} className={clsx('folder-container', folderClassName)}>
                 <div className="folder-name">
+                  {((!isFolder && mode === 'multiple') || (isFolder && isSelectableFolder)) && (
+                    <CheckBox
+                      defaultChecked={
+                        isFunction(checkIsSelected)
+                          ? checkIsSelected(folder)
+                          : some(selectFolders, [valueKey, get(folder, valueKey)])
+                      }
+                      name={get(folder, labelKey)}
+                      onChange={(checked: boolean) => {
+                        onSelectFolder(folder, checked);
+                      }}
+                    />
+                  )}
                   {isFolder ? <Folder /> : <Document />}
-                  <span>{folder?.name}</span>
+                  <span>{get(folder, labelKey)}</span>
                 </div>
                 {isFolder && (
                   <button type="button" onClick={() => pushToDepth(folder, index)}>
