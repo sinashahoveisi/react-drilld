@@ -55,6 +55,7 @@ export interface DrillDProps {
   folderKey?: checkIsFolder | string[] | string;
   defaultValue?: FolderProps[];
   checkIsSelected?: (folder: any) => boolean;
+  onSave?: (selectedFolders: FolderProps[]) => void;
 }
 
 const DrillD: FC<DrillDProps> = ({
@@ -71,6 +72,7 @@ const DrillD: FC<DrillDProps> = ({
   mode = 'single',
   isSelectableFolder,
   url,
+  onSave,
   headerRequest,
   selectFolderQueryParams = (folder: any) => folder?.id,
   fetchedChildrenDataPath = 'data',
@@ -134,9 +136,14 @@ const DrillD: FC<DrillDProps> = ({
     }
   };
 
+  const onSaveChanges = () => {
+    console.log(selectFolders);
+    if (isFunction(onSave)) onSave(selectFolders);
+  };
+
   return (
     <div className={clsx('drilld container', containerClassName)}>
-      <div className="header">
+      <header className="header">
         <h4>{title}</h4>
         <div className="header-action">
           {!!depth?.length && (
@@ -155,8 +162,8 @@ const DrillD: FC<DrillDProps> = ({
             </ul>
           )}
         </div>
-      </div>
-      <div className="body">
+      </header>
+      <main className="body">
         {isUndefined(foldersChildren) && url ? (
           <Spinner />
         ) : (
@@ -190,7 +197,17 @@ const DrillD: FC<DrillDProps> = ({
             );
           })
         )}
-      </div>
+      </main>
+      {(mode === 'multiple' || isSelectableFolder) && (
+        <footer className="footer">
+          <button type="button" className="success" onClick={onSaveChanges}>
+            save
+          </button>
+          <button type="button" className="danger">
+            cancel
+          </button>
+        </footer>
+      )}
     </div>
   );
 };
