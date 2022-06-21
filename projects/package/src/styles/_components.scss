@@ -2,36 +2,43 @@
 
 .drilld {
   .checkbox-container {
+    height: 1rem;
+    width: 1rem;
+    padding-right: 0.5rem;
     position: relative;
     display: flex;
     align-items: center;
-    margin-right: 0.5rem;
 
     input[type=checkbox].checkbox-input {
       position: absolute;
-      height: 15px;
-      width: 15px;
+      height: 1rem;
+      width: 1rem;
       opacity: 0;
     }
+
+    input[type=checkbox].checkbox-input:checked + div.checkbox-shape > svg {
+      display: block!important;
+    }
+
     .checkbox-shape {
       display: flex;
-      height: 12px;
-      width: 12px;
+      height: 1rem;
+      width: 1rem;
       flex-shrink: 0;
       align-items: center;
-      border-radius: 15px;
-      border: #61dafb 5px solid;
+      justify-content: center;
+      border-radius: 5px;
+      border: #a6fb61 3px solid;
       background-color: white;
-      margin-right: 0.5rem;
       :focus-within {
-        border-color: #204954;
+        border-color: #235420;
       }
 
     & > svg {
       pointer-events: none;
       display: none;
-      height: 5px;
-      width: 5px;
+      height: 0.85rem;
+      width: 0.85rem;
       color: #204954;
       fill: currentColor;
       }

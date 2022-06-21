@@ -7,10 +7,10 @@ interface Props {
   className?: string;
   onChange(checked: boolean): void;
   containerClassName?: string;
-  defaultChecked?: boolean;
+  checked?: boolean;
 }
 
-const CheckBox: FC<Props> = ({name, label, defaultChecked, className, onChange, containerClassName, children}) => {
+const CheckBox: FC<Props> = ({name, label, className, onChange, containerClassName, checked, children}) => {
   return (
     <div className={clsx('checkbox-container', containerClassName)}>
       <input
@@ -22,7 +22,7 @@ const CheckBox: FC<Props> = ({name, label, defaultChecked, className, onChange, 
           onChange(event.target.checked);
         }}
         className="checkbox-input"
-        defaultChecked={defaultChecked}
+        checked={checked}
       />
       <div className="checkbox-shape">
         <svg version="1.1" viewBox="0 0 17 12" xmlns="http://www.w3.org/2000/svg">

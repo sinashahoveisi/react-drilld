@@ -12,16 +12,30 @@ function App() {
         {/*  showFullPath*/}
         {/*  folders={[{name: 'sina', children: [{name: 'sina2', children: [{name: 'ali'}]}, {name: 'sina3'}]}]}*/}
         {/*/>*/}
+        {/*<DrillD*/}
+        {/*  title="sina"*/}
+        {/*  url="https://a.behzee.com/general/v1/diseases/children"*/}
+        {/*  headerRequest={{*/}
+        {/*    Authorization:*/}
+        {/*      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTQwMzE0MDk2N2QzNTZjNzE3YzY5ZjlhYjJjZDNiMjhmZGJlMjM2MGNkZDc5NTVkMmVjZjEyNzViZWYwMjhiMmM4MTRkYWE4NjUwYzU1NjciLCJpYXQiOjE2NTU4NDE2MjYuNjQ2MTA0LCJuYmYiOjE2NTU4NDE2MjYuNjQ2MTEyLCJleHAiOjE2NTY0NDY0MjYuNjIzMjk5LCJzdWIiOiIzODgwIiwic2NvcGVzIjpbImFkbWluIl19.lOtTHTG7btEmQz-xi049KDixI6GFT8qvizdvHqcoPZ9GzytGDYqqw3bIGgr77_ehCn-A__nAjfsJpeaGtUug5MXp7ExnnAkIx3sA2FdaAO9twI1wGiTj0Mc-_oEZ7O3pjYkru8yGhLKMyTYNlIVobeEXfdFc4iknoxyUiM4AHEb6oMMPcFMkabTldbINAcbqdpxselNbhy0-3Vd7pyIkRM9qGJtaOW2KudHrFj5lbQd5D12-ZQ0X6VFcpZVj_191A9PKACXHyDh7Cqbj5HRTggTlGh8hCRy3KqArYiOSIRplZBRgKcmH03vxIur0SeiKhepKJVSwVVWrSibXBjkbRCqy2AkajcVMNgFdvYr9rpLbiE3V3K2oyK6syxmIYJhXOM5BGWAQ0VDaY1jtzsjTgjDqhjATaOTWq9kifssG1tEqHt93TNZPMgLdmX5GRc4bDKD7IJZEBjD8KN5qFkaKoCYjNC9f3C1VQ0JvhmoWjlEK4MiPak0E_pDo6IfarCArfKWrR7LHdnLqFgbFPccAHaEht5keeIIsaTfPLr1SinOc4mZVTJIvaWr7ygOkvUDHhQPGF8uqRFf74MJZGeUz650yCQQV9Rao-frr390LAC2viYq0rLV2h1JYlIrENuaucfLzkyqtEtLVm0fopF_xAimLaBrIwQ9rknL4XXm9krs'*/}
+        {/*  }}*/}
+        {/*  mode="multiple"*/}
+        {/*  selectFolderQueryParams={(folder: any) => ({parent_id: folder?.id})}*/}
+        {/*  fetchedChildrenDataPath={['data']}*/}
+        {/*  folderKey="is_parent"*/}
+        {/*/>*/}
         <DrillD
           title="sina"
           url="https://a.behzee.com/general/v1/diseases/children"
           headerRequest={{
             Authorization:
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOTJjNzNkNjk1NGVhYjU5NDI3NzEwYmU4Y2QxZTNkYjNiNzYzMmEyOTc2M2QxNjBiM2Q3MmVkZWE3M2VlYzYxMmJkOWI1YjM3ZTY2MzY5ZTYiLCJpYXQiOjE2NTUwNjM3ODQuMjg1NjMzLCJuYmYiOjE2NTUwNjM3ODQuMjg1NjM4LCJleHAiOjE2NTU2Njg1ODQuMjY5NSwic3ViIjoiMzg4MCIsInNjb3BlcyI6WyJhZG1pbiJdfQ.dK58MhGFwBDB5eHTwKJ0X_UTVYQTbePBiHKTYMn3ZEOMCQBqZ2ofp0wObeaF-Df2undM5bveYh4v7lFfbWXjUJWUJOFYgY_JJZwzmAcOr1baYbv5kg0-_-lKHlBrR9Y9s44ULkUofUhfC6A2HZF-BoWT4R8XjTV7cIkxf-nd6qAKYe5wkkvCMiyqWIlz94NpDaDVgxkoBs18vJ9HKiOmuDrVOwL9R0uRfZUmot5aVlZRTQ9CRi1rnlEDdXHqi56ZlwqBd90zIodfwDp1mFITAqG5TP2l-RpP_0RPx1q7NJV0HRPgseOy9vBozxTHJebKgKKlIqgPpqSfdbrmXldRSTRkG_z9BkfWnCF2tInN9_UK7mkwkLWpv9h9jecms436PnIGdbHelK6jRjlkarH3kwxwjl4envuYtdKTfFABIVQtDBIt3IUCNswoyPr8D6aRtpWk92Ykl5JVWq_nxG2sULX-1mnjYZJW26ZQr77_VzcbhpvmKWA1wlbkGnREaUvPDix6n7omKDb2eECIVvmSHKafDw7K8u01RDbcIqSPHcvqtl08TOgQkTcKSZ5r43bgM38YrW-To57CTn-FmykbKVSOogNzQJVA-gWa3EaYVPe-vd3tz7wU_UhdoqGHxAC3pu7kK8ZUFnhTmsYAYG5aY2m9C5t89wgX7jcLAEBYIGw'
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTQwMzE0MDk2N2QzNTZjNzE3YzY5ZjlhYjJjZDNiMjhmZGJlMjM2MGNkZDc5NTVkMmVjZjEyNzViZWYwMjhiMmM4MTRkYWE4NjUwYzU1NjciLCJpYXQiOjE2NTU4NDE2MjYuNjQ2MTA0LCJuYmYiOjE2NTU4NDE2MjYuNjQ2MTEyLCJleHAiOjE2NTY0NDY0MjYuNjIzMjk5LCJzdWIiOiIzODgwIiwic2NvcGVzIjpbImFkbWluIl19.lOtTHTG7btEmQz-xi049KDixI6GFT8qvizdvHqcoPZ9GzytGDYqqw3bIGgr77_ehCn-A__nAjfsJpeaGtUug5MXp7ExnnAkIx3sA2FdaAO9twI1wGiTj0Mc-_oEZ7O3pjYkru8yGhLKMyTYNlIVobeEXfdFc4iknoxyUiM4AHEb6oMMPcFMkabTldbINAcbqdpxselNbhy0-3Vd7pyIkRM9qGJtaOW2KudHrFj5lbQd5D12-ZQ0X6VFcpZVj_191A9PKACXHyDh7Cqbj5HRTggTlGh8hCRy3KqArYiOSIRplZBRgKcmH03vxIur0SeiKhepKJVSwVVWrSibXBjkbRCqy2AkajcVMNgFdvYr9rpLbiE3V3K2oyK6syxmIYJhXOM5BGWAQ0VDaY1jtzsjTgjDqhjATaOTWq9kifssG1tEqHt93TNZPMgLdmX5GRc4bDKD7IJZEBjD8KN5qFkaKoCYjNC9f3C1VQ0JvhmoWjlEK4MiPak0E_pDo6IfarCArfKWrR7LHdnLqFgbFPccAHaEht5keeIIsaTfPLr1SinOc4mZVTJIvaWr7ygOkvUDHhQPGF8uqRFf74MJZGeUz650yCQQV9Rao-frr390LAC2viYq0rLV2h1JYlIrENuaucfLzkyqtEtLVm0fopF_xAimLaBrIwQ9rknL4XXm9krs'
           }}
+          mode="multiple"
+          isSelectableFolder
           selectFolderQueryParams={(folder: any) => ({parent_id: folder?.id})}
           fetchedChildrenDataPath={['data']}
-          isFolderProps="is_parent"
+          folderKey="is_parent"
         />
       </header>
     </div>

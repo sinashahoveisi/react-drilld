@@ -97,7 +97,7 @@ const DrillD: FC<DrillDProps> = ({
   }, [depth, fetchedFolders]);
 
   useEffect(() => {
-    if (url && selectFolderQueryParams && !foldersChildren) {
+    if (url && selectFolderQueryParams && !foldersChildren?.length) {
       const fetchUrl = new URL(url);
       const queryFolder = selectFolderQueryParams(last(depth));
       forEach(entries(queryFolder), ([key, value]: [string, any]) => {
@@ -174,7 +174,7 @@ const DrillD: FC<DrillDProps> = ({
                 <div className="folder-name">
                   {((!isFolder && mode === 'multiple') || (isFolder && isSelectableFolder)) && (
                     <CheckBox
-                      defaultChecked={
+                      checked={
                         isFunction(checkIsSelected)
                           ? checkIsSelected(folder)
                           : some(selectFolders, [valueKey, get(folder, valueKey)])
@@ -200,11 +200,11 @@ const DrillD: FC<DrillDProps> = ({
       </main>
       {(mode === 'multiple' || isSelectableFolder) && (
         <footer className="footer">
-          <button type="button" className="success" onClick={onSaveChanges}>
-            save
-          </button>
           <button type="button" className="danger">
-            cancel
+            <span>cancel</span>
+          </button>
+          <button type="button" className="success" onClick={onSaveChanges}>
+            <span>save</span>
           </button>
         </footer>
       )}
