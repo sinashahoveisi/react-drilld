@@ -27,6 +27,36 @@
       text-align: center;
     }
 
+    input.search {
+      width: 100%;
+      background-color: $colorGrayLight;
+      color: $colorPen;
+      text-align: left;
+      font-size: 0.9rem;
+      border: none;
+      outline: none;
+      border-radius: 1rem;
+      padding: 0.8rem;
+      margin: 5px 0;
+
+      &::-webkit-input-placeholder {
+        color: $colorGrayMid;
+        font-size: 1rem;
+      }
+
+      &:-ms-input-placeholder {
+        color: $colorGrayMid;
+        font-size: 1rem;
+      }
+
+      &::placeholder {
+        color: $colorGrayMid;
+        font-size: 1rem;
+      }
+
+    }
+
+
     .header-action {
       display: flex;
       flex-direction: row;
