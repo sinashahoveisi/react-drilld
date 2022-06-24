@@ -22,6 +22,7 @@
     "start": "lerna run --parallel start",
     "build": "lerna run build --scope react-drilld",
     "storybook": "lerna run storybook --scope react-drilld",
+    "build-storybook": "lerna run build-storybook --scope react-drilld",
     "clean": "lerna run clean --scope react-drilld",
     "clean:all": "lerna clean",
     "watch": "lerna run watch --scope react-drilld",
