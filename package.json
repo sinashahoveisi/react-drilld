@@ -6,7 +6,9 @@
     "react",
     "drill down",
     "drilld",
-    "folder structure"
+    "folder structure",
+    "tree structure",
+    "graph structure"
   ],
   "author": "SinaShahoveisi <shahoveisysina@yahoo.com> (https://sinashahoveisi.github.io)",
   "workspaces": [

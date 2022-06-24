@@ -3,40 +3,48 @@
   ```json
   {
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "publish": "lerna publish",
-    "link": "lerna link",
-    "changed": "lerna changed",
-    "start": "lerna run --parallel start",
-    "build": "lerna run build --scope react-drilld",
-    "clean": "lerna run clean --scope react-drilld",
-    "clean:all": "lerna clean",
-    "watch": "lerna run watch --scope react-drilld",
-    "package": "lerna exec --scope react-drilld -- npm pack"
-  }
+    "prepack": "yarn build",
+    "prebuild": "yarn clean",
+    "start": "rollup -cw",
+    "build": "rollup -c",
+    "clean": "rimraf dist react-drilld-*.tgz",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+    }
   }
   ```
-- Bootstrap the packages in the current Lerna repo. Installing all their dependencies and linking any cross-dependencies.
+- build project.
 ```sh
-npm run bootstrap
+npm run prepack
 ```
-- Create a new release of the packages that have been updated. Prompts for a new version and updates all the packages on git and npm.
+---
+- clean project
 ```sh
-npm run publish
+npm run prebuild
 ```
-- Symlink together all Lerna `packages` that are dependencies of each other in the current Lerna repo.
+---
+- watch project for build when changed
 ```sh
-npm run link
+npm run start
 ```
-- Check which packages have changed since the last release.
+---
+- build project for publish
 ```sh
-npm run changed
+npm run build
 ```
-- Remove all `react-drilld-*.tgz` file from react-drilld package.
+---
+- clean project
 ```sh
 npm run clean
 ```
-- Remove the `node_modules` directory from all packages.
+---
+- start storybook project
 ```sh
-npm run clean:all
+npm run storybook
 ```
+---
+- build storybook project
+```sh
+npm run build-storybook
+```
+---
