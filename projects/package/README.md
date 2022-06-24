@@ -2,10 +2,17 @@
 
 > The best DrillDown for folder or graph or tree structure package for react
 
-[![NPM](https://img.shields.io/npm/v/drilld.svg)](https://www.npmjs.com/package/react-drilld)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![CircleCI branch](https://img.shields.io/circleci/project/github/atlassian/react-drilld/master.svg)](https://circleci.com/gh/atlassian/react-drilld/tree/master)
-
+![GitHub branch checks state](https://img.shields.io/github/checks-status/sinashahoveisi/react-drilld/master?logo=github&style=plastic)
+![GitHub issues](https://img.shields.io/github/issues/sinashahoveisi/react-drilld?logo=github&style=plastic)
+![GitHub](https://img.shields.io/github/license/sinashahoveisi/react-drilld?style=plastic)
+![npm](https://img.shields.io/npm/v/react-drilld?logo=npm&style=plastic)
+![Website](https://img.shields.io/website?down_message=offline&style=plastic&up_message=online&url=https%3A%2F%2Fsinasho.ir)
+![GitHub language count](https://img.shields.io/github/languages/count/sinashahoveisi/react-drilld?logo=TypeScript&style=plastic)
+![GitHub top language](https://img.shields.io/github/languages/top/sinashahoveisi/react-drilld?logo=TypeScript&style=plastic)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/sinashahoveisi/react-drilld?style=plastic)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sinashahoveisi/react-drilld?style=plastic)
+![GitHub all releases](https://img.shields.io/github/downloads/sinashahoveisi/react-drilld/total?logo=github&style=plastic)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/sinashahoveisi/react-drilld/react?style=plastic)
 ---
 
 ## What is this?
