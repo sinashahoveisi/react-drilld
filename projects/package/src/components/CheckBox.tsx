@@ -8,6 +8,7 @@ interface Props {
   onChange(checked: boolean): void;
   containerClassName?: string;
   checked?: boolean;
+  children?: any;
 }
 
 const CheckBox: FC<Props> = ({name, label, className, onChange, containerClassName, checked, children}) => {

@@ -20,10 +20,10 @@ import {
   debounce,
   isArray
 } from 'lodash';
-import {findNode} from 'd-forest';
-import {CheckBox} from 'components';
-import {Back, Folder, Document, Forward, Spinner} from 'svg';
-import './styles/main.scss';
+// import {findNode} from 'd-forest';
+import {CheckBox} from './components';
+import {Back, Folder, Document, Forward, Spinner} from './svg';
+// import './styles/main.scss';
 
 export interface FolderProps {
   name: string;
@@ -149,7 +149,7 @@ const DrillD: FC<DrillDProps> = ({
 
   const debounceSearch = debounce(() => {
     if (url) setDepth((prevState) => (isArray(prevState) ? undefined : []));
-    else findNode(folders, (node: FolderProps) => get(node, labelKey)?.search(new RegExp(search, 'gi')));
+    // else findNode(folders, (node: FolderProps) => get(node, labelKey)?.search(new RegExp(search, 'gi')));
   }, 1000);
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
