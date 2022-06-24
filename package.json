@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "publish": "lerna publish",
+    "publish-all": "lerna publish",
     "link": "lerna link",
     "changed": "lerna changed",
     "start": "lerna run --parallel start",
@@ -27,6 +27,7 @@
     "clean:all": "lerna clean",
     "watch": "lerna run watch --scope react-drilld",
     "package": "lerna exec --scope react-drilld -- npm pack",
+    "publish": "lerna exec --scope react-drilld -- npm publish",
     "lint": "eslint ./projects --fix --ext .ts,.tsx,.js,.json",
     "pretty": "prettier --write .",
     "precommit": "npx lint-staged",
