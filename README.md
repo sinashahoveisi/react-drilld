@@ -12,7 +12,6 @@
 ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/sinashahoveisi/react-drilld?style=plastic)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sinashahoveisi/react-drilld?style=plastic)
 ![GitHub all releases](https://img.shields.io/github/downloads/sinashahoveisi/react-drilld/total?logo=github&style=plastic)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/sinashahoveisi/react-drilld/react?style=plastic)
 ---
 
 ## What is this?
