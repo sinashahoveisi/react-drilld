@@ -21,9 +21,9 @@ import {
   isArray
 } from 'lodash';
 // import {findNode} from 'd-forest';
-import {CheckBox} from './components';
-import {Back, Folder, Document, Forward, Spinner} from './svg';
-// import './styles/main.scss';
+import {CheckBox} from 'components';
+import {Back, Folder, Document, Forward, Spinner} from 'svg';
+import './styles/main.scss';
 
 export interface FolderProps {
   name: string;
