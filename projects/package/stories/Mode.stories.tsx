@@ -43,7 +43,7 @@ SelectableFolders.args = {
     {
       name: 'Folder B',
       children: [{name: 'File B1'}, {name: 'File A2'}, {name: 'Folder BB', children: [{name: 'File BB1'}]}]
-    },
+    }
   ]
 };
 

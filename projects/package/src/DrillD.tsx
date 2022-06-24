@@ -68,7 +68,7 @@ const DrillD: FC<DrillDProps> = ({
   folders,
   folderClassName,
   containerClassName,
-  showFullPath,
+  showFullPath = false,
   backTitle = 'back',
   defaultValue,
   checkIsSelected,
@@ -78,7 +78,7 @@ const DrillD: FC<DrillDProps> = ({
   isSelectableFolder,
   url,
   onSave,
-  hasSearch,
+  hasSearch = false,
   searchQuery,
   headerRequest,
   selectFolderQueryParams = (folder: any) => folder?.id,
@@ -166,7 +166,7 @@ const DrillD: FC<DrillDProps> = ({
     <div className={clsx('drilld container', containerClassName)}>
       <header className="header">
         <h4>{title}</h4>
-        {(hasSearch || searchQuery) && (
+        {(hasSearch || (url && searchQuery)) && (
           <input className="search" name="search" value={search} onChange={onSearchChange} placeholder="search ..." />
         )}
         <div className="header-action">
