@@ -27,8 +27,8 @@ Users can now easily analyze unstructured data that is difficult to understand a
 - [Installation](#installation)
 - [Usage](#usage)
 - [Example](#examples)
-    - [Simple](#simple)
-    - [Advance](#advance)
+  - [Simple](#simple)
+  - [Advance](#advance)
 - [Demo](#demo)
 - [Documentation](#documentation)
 - [Creator](#creator)
@@ -75,24 +75,24 @@ import {DrillD} from 'react-drilld';
 
 function App() {
   return (
-    <div className="App">
-      <DrillD 
-          title="sina" 
-          folders={[
-              {
-                  name: 'Folder A',
-                  children: [{name: 'File A1'}, {name: 'File A2'}, {name: 'Folder AA', children: [{name: 'File AA1'}]}]
-              },
-              {
-                  name: 'File 1'
-              },
-              {
-                  name: 'Folder B',
-                  children: [{name: 'File B1'}, {name: 'File A2'}, {name: 'Folder BB', children: [{name: 'File BB1'}]}]
-              },
-          ]} 
-      />
-    </div>
+          <div className="App">
+            <DrillD
+                    title="sina"
+                    folders={[
+                      {
+                        name: 'Folder A',
+                        children: [{name: 'File A1'}, {name: 'File A2'}, {name: 'Folder AA', children: [{name: 'File AA1'}]}]
+                      },
+                      {
+                        name: 'File 1'
+                      },
+                      {
+                        name: 'Folder B',
+                        children: [{name: 'File B1'}, {name: 'File A2'}, {name: 'Folder BB', children: [{name: 'File BB1'}]}]
+                      },
+                    ]}
+            />
+          </div>
   );
 }
 ```
@@ -102,13 +102,13 @@ function App() {
 
 ## Demo
 
-[A demo is worth a thousand words](https://react-drild.sinasho.ir)
+[A demo is worth a thousand words](https://react-drilld.sinasho.ir/)
 
 ---
 
 ## Documentation
 
-Check the [documentation](https://react-drild.sinasho.ir) to get you started!
+Check the [documentation](https://react-drilld.sinasho.ir/) to get you started!
 
 ---
 

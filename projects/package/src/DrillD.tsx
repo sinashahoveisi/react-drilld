@@ -1,4 +1,4 @@
-import {ChangeEvent, FC, useCallback, useEffect, useMemo, useState} from 'react';
+import {ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {
   flatMapDeep,
@@ -60,7 +60,7 @@ export interface DrillDProps {
   checkIsSelected?: (folder: any) => boolean;
   onSave?: (selectedFolders: FolderProps[]) => void;
   hasSearch?: boolean;
-  searchQuery?: string;
+  searchQueryKey?: string;
 }
 
 const DrillD: FC<DrillDProps> = ({
@@ -79,15 +79,15 @@ const DrillD: FC<DrillDProps> = ({
   url,
   onSave,
   hasSearch = false,
-  searchQuery,
+  searchQueryKey,
   headerRequest,
   selectFolderQueryParams = (folder: any) => folder?.id,
   fetchedChildrenDataPath = 'data',
   folderKey = 'isFolder'
 }) => {
-  const [search, setSearch] = useState<string>('');
+  const search = useRef<string | null>();
   const [depth, setDepth] = useState<FolderDepthProps[] | undefined>([]);
-  const [fetchedFolders, setFetchedFolders] = useState<FolderProps[]>([]);
+  const [fetchedFolders, setFetchedFolders] = useState<FolderProps[] | undefined>(undefined);
   const [selectFolders, setSelectFolders] = useState<FolderProps[]>(defaultValue || []);
 
   const pushToDepth = useCallback((item: FolderProps, index: number) => {
@@ -105,11 +105,11 @@ const DrillD: FC<DrillDProps> = ({
   }, [depth, fetchedFolders]);
 
   useEffect(() => {
-    if (url && !foldersChildren?.length) {
+    if (url && (!foldersChildren?.length || search?.current?.length || search?.current === null)) {
       const fetchUrl = new URL(url);
       const queryFolder =
-        hasSearch && search && searchQuery
-          ? merge(selectFolderQueryParams(last(depth)), {[searchQuery]: search})
+        search?.current?.length && searchQueryKey
+          ? {[searchQueryKey]: search?.current}
           : selectFolderQueryParams(last(depth));
       forEach(entries(queryFolder), ([key, value]: [string, any]) => {
         if (!isNil(value)) fetchUrl.searchParams.append(key, value);
@@ -147,15 +147,12 @@ const DrillD: FC<DrillDProps> = ({
     }
   };
 
-  const debounceSearch = debounce(() => {
-    if (url) setDepth((prevState) => (isArray(prevState) ? undefined : []));
+  const debounceSearch = debounce((e: ChangeEvent<HTMLInputElement>) => {
+    search.current = e.target.value;
+    setFetchedFolders(undefined);
+    setDepth((prevState) => (isArray(prevState) ? undefined : []));
     // else findNode(folders, (node: FolderProps) => get(node, labelKey)?.search(new RegExp(search, 'gi')));
   }, 1000);
-
-  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-    debounceSearch();
-  };
 
   const onSaveChanges = () => {
     console.log(selectFolders);
@@ -166,8 +163,8 @@ const DrillD: FC<DrillDProps> = ({
     <div className={clsx('drilld container', containerClassName)}>
       <header className="header">
         <h4>{title}</h4>
-        {(hasSearch || (url && searchQuery)) && (
-          <input className="search" name="search" value={search} onChange={onSearchChange} placeholder="search ..." />
+        {(hasSearch || (url && searchQueryKey)) && (
+          <input className="search" name="search" onChange={debounceSearch} placeholder="search ..." />
         )}
         <div className="header-action">
           {!!depth?.length && (
@@ -187,6 +184,7 @@ const DrillD: FC<DrillDProps> = ({
           )}
         </div>
       </header>
+      {console.log(foldersChildren)}
       <main className="body">
         {isUndefined(foldersChildren) && url ? (
           <Spinner />

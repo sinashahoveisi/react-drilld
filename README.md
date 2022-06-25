@@ -102,13 +102,13 @@ function App() {
 
 ## Demo
 
-[A demo is worth a thousand words](https://react-drild.sinasho.ir)
+[A demo is worth a thousand words](https://react-drilld.sinasho.ir/)
 
 ---
 
 ## Documentation
 
-Check the [documentation](https://react-drild.sinasho.ir) to get you started!
+Check the [documentation](https://react-drilld.sinasho.ir/) to get you started!
 
 ---
 
