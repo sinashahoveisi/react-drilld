@@ -1,29 +1,12 @@
 import {ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
-import {
-  flatMapDeep,
-  get,
-  isFunction,
-  set,
-  map,
-  concat,
-  dropRight,
-  last,
-  merge,
-  isUndefined,
-  forEach,
-  entries,
-  isNil,
-  cloneWith,
-  some,
-  remove,
-  debounce,
-  isArray
-} from 'lodash';
-// import {findNode} from 'd-forest';
+import lodash from 'lodash';
+import deepdash from 'deepdash';
 import {CheckBox} from 'components';
 import {Back, Folder, Document, Forward, Spinner} from 'svg';
 import './styles/main.scss';
+
+deepdash(lodash);
 
 export interface FolderProps {
   name: string;
@@ -88,21 +71,22 @@ const DrillD: FC<DrillDProps> = ({
   const search = useRef<string | null>();
   const [depth, setDepth] = useState<FolderDepthProps[] | undefined>([]);
   const [fetchedFolders, setFetchedFolders] = useState<FolderProps[] | undefined>(undefined);
+  const [filteredFolders, setFilteredFolders] = useState<FolderProps[] | undefined>(undefined);
   const [selectFolders, setSelectFolders] = useState<FolderProps[]>(defaultValue || []);
 
   const pushToDepth = useCallback((item: FolderProps, index: number) => {
-    setDepth((prevState) => concat(prevState || [], merge(item, {index})));
+    setDepth((prevState) => lodash.concat(prevState || [], lodash.merge(item, {index})));
   }, []);
 
   const popDepth = useCallback(() => {
-    setDepth((prevState) => dropRight(prevState));
+    setDepth((prevState) => lodash.dropRight(prevState));
   }, []);
 
   const foldersChildren = useMemo(() => {
-    const path = flatMapDeep(depth, (depthItem: FolderDepthProps) => [depthItem.index, 'children']);
-    if (path?.length) return get(url ? fetchedFolders : folders, path);
-    return url ? fetchedFolders : folders;
-  }, [depth, fetchedFolders]);
+    const path = lodash.flatMapDeep(depth, (depthItem: FolderDepthProps) => [depthItem.index, 'children']);
+    if (path?.length) return lodash.get(url ? fetchedFolders : filteredFolders || folders, path);
+    return url ? fetchedFolders : filteredFolders || folders;
+  }, [depth, fetchedFolders, filteredFolders]);
 
   useEffect(() => {
     if (url && (!foldersChildren?.length || search?.current?.length || search?.current === null)) {
@@ -110,26 +94,29 @@ const DrillD: FC<DrillDProps> = ({
       const queryFolder =
         search?.current?.length && searchQueryKey
           ? {[searchQueryKey]: search?.current}
-          : selectFolderQueryParams(last(depth));
-      forEach(entries(queryFolder), ([key, value]: [string, any]) => {
-        if (!isNil(value)) fetchUrl.searchParams.append(key, value);
+          : selectFolderQueryParams(lodash.last(depth));
+      lodash.forEach(lodash.entries(queryFolder), ([key, value]: [string, any]) => {
+        if (!lodash.isNil(value)) fetchUrl.searchParams.append(key, value);
       });
       fetch(fetchUrl, {
         headers: headerRequest
       })
         .then((response) => response.json())
         .then((children: any) => {
-          const childrenFolder = isFunction(fetchedChildrenDataPath)
+          const childrenFolder = lodash.isFunction(fetchedChildrenDataPath)
             ? fetchedChildrenDataPath(children)
-            : get(children, fetchedChildrenDataPath);
-          const path = flatMapDeep(depth, (depthItem: FolderDepthProps) => [depthItem.index, 'children']);
-          const newFetchedFolders = cloneWith([...(fetchedFolders || [])], (copyFetchedFolders: FolderProps[]) => {
-            if (path?.length) {
-              set(copyFetchedFolders, path, childrenFolder);
-              return copyFetchedFolders;
+            : lodash.get(children, fetchedChildrenDataPath);
+          const path = lodash.flatMapDeep(depth, (depthItem: FolderDepthProps) => [depthItem.index, 'children']);
+          const newFetchedFolders = lodash.cloneWith(
+            [...(fetchedFolders || [])],
+            (copyFetchedFolders: FolderProps[]) => {
+              if (path?.length) {
+                lodash.set(copyFetchedFolders, path, childrenFolder);
+                return copyFetchedFolders;
+              }
+              return childrenFolder;
             }
-            return childrenFolder;
-          });
+          );
           setFetchedFolders(newFetchedFolders);
         })
         .catch(console.error);
@@ -139,24 +126,35 @@ const DrillD: FC<DrillDProps> = ({
   const onSelectFolder = (folder: FolderProps, checked: boolean) => {
     if (checked) setSelectFolders((prevState) => (mode === 'multiple' ? [...prevState, folder] : [folder]));
     else {
-      const newSelectedItem = cloneWith(selectFolders, (copySelectFolder: FolderProps[]) => {
-        remove(copySelectFolder, (copyFolder: FolderProps) => get(copyFolder, valueKey) === get(folder, valueKey));
+      const newSelectedItem = lodash.cloneWith(selectFolders, (copySelectFolder: FolderProps[]) => {
+        lodash.remove(
+          copySelectFolder,
+          (copyFolder: FolderProps) => lodash.get(copyFolder, valueKey) === lodash.get(folder, valueKey)
+        );
         return copySelectFolder;
       });
       setSelectFolders(newSelectedItem);
     }
   };
 
-  const debounceSearch = debounce((e: ChangeEvent<HTMLInputElement>) => {
-    search.current = e.target.value;
-    setFetchedFolders(undefined);
-    setDepth((prevState) => (isArray(prevState) ? undefined : []));
-    // else findNode(folders, (node: FolderProps) => get(node, labelKey)?.search(new RegExp(search, 'gi')));
+  const debounceSearch = lodash.debounce((e: ChangeEvent<HTMLInputElement>) => {
+    if (url) {
+      search.current = e.target.value;
+      setFetchedFolders(undefined);
+      setDepth((prevState) => (lodash.isArray(prevState) ? undefined : []));
+    } else {
+      const newFilteredFolders: FolderProps[] = [];
+      // @ts-ignore
+      lodash?.eachDeep(folders, (node: FolderProps) => {
+        if (new RegExp(e.target.value, 'gi').test(lodash.get(node, labelKey))) newFilteredFolders.push(node);
+      });
+      setFilteredFolders(newFilteredFolders);
+    }
   }, 1000);
 
   const onSaveChanges = () => {
     console.log(selectFolders);
-    if (isFunction(onSave)) onSave(selectFolders);
+    if (lodash.isFunction(onSave)) onSave(selectFolders);
   };
 
   return (
@@ -170,12 +168,12 @@ const DrillD: FC<DrillDProps> = ({
           {!!depth?.length && (
             <button className="back-button" onClick={popDepth}>
               <Back />
-              <span>{showFullPath ? backTitle : last(depth)?.name}</span>
+              <span>{showFullPath ? backTitle : lodash.last(depth)?.name}</span>
             </button>
           )}
           {showFullPath && (
             <ul className="full-path-container">
-              {map(depth, (folder: FolderProps, index: number) => (
+              {lodash.map(depth, (folder: FolderProps, index: number) => (
                 <li key={index}>
                   <span>{folder?.name}</span>
                 </li>
@@ -184,31 +182,32 @@ const DrillD: FC<DrillDProps> = ({
           )}
         </div>
       </header>
-      {console.log(foldersChildren)}
       <main className="body">
-        {isUndefined(foldersChildren) && url ? (
+        {lodash.isUndefined(foldersChildren) && url ? (
           <Spinner />
         ) : (
-          map(foldersChildren, (folder: FolderProps, index: number) => {
-            const isFolder = isFunction(folderKey) ? folderKey(folder) : get(folder, folderKey) || folder?.children;
+          lodash.map(foldersChildren, (folder: FolderProps, index: number) => {
+            const isFolder = lodash.isFunction(folderKey)
+              ? folderKey(folder)
+              : lodash.get(folder, folderKey) || folder?.children;
             return (
               <div key={index} className={clsx('folder-container', folderClassName)}>
                 <div className="folder-name">
                   {((!isFolder && mode === 'multiple') || (isFolder && isSelectableFolder)) && (
                     <CheckBox
                       checked={
-                        isFunction(checkIsSelected)
+                        lodash.isFunction(checkIsSelected)
                           ? checkIsSelected(folder)
-                          : some(selectFolders, [valueKey, get(folder, valueKey)])
+                          : lodash.some(selectFolders, [valueKey, lodash.get(folder, valueKey)])
                       }
-                      name={get(folder, labelKey)}
+                      name={lodash.get(folder, labelKey)}
                       onChange={(checked: boolean) => {
                         onSelectFolder(folder, checked);
                       }}
                     />
                   )}
                   {isFolder ? <Folder /> : <Document />}
-                  <span>{get(folder, labelKey)}</span>
+                  <span>{lodash.get(folder, labelKey)}</span>
                 </div>
                 {isFolder && (
                   <button type="button" onClick={() => pushToDepth(folder, index)}>
