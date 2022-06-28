@@ -1,6 +1,6 @@
 {
   "name": "@react-drilld/root",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "The best DrillDown package for react",
   "keywords": [
@@ -14,8 +14,8 @@
   "author": "Sina Shahoveisi <shahoveisysina@yahoo.com> (https://sinashahoveisi.github.io)",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "workspaces": [
     "projects/*"

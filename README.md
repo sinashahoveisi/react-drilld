@@ -9,9 +9,7 @@
 ![Website](https://img.shields.io/website?down_message=offline&style=plastic&up_message=online&url=https%3A%2F%2Fsinasho.ir)
 ![GitHub language count](https://img.shields.io/github/languages/count/sinashahoveisi/react-drilld?logo=TypeScript&style=plastic)
 ![GitHub top language](https://img.shields.io/github/languages/top/sinashahoveisi/react-drilld?logo=TypeScript&style=plastic)
-![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/sinashahoveisi/react-drilld?style=plastic)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sinashahoveisi/react-drilld?style=plastic)
-![GitHub all releases](https://img.shields.io/github/downloads/sinashahoveisi/react-drilld/total?logo=github&style=plastic)
 ---
 
 ## What is this?
@@ -77,26 +75,51 @@ function App() {
   return (
           <div className="App">
             <DrillD
-                    title="sina"
-                    folders={[
-                      {
-                        name: 'Folder A',
-                        children: [{name: 'File A1'}, {name: 'File A2'}, {name: 'Folder AA', children: [{name: 'File AA1'}]}]
-                      },
-                      {
-                        name: 'File 1'
-                      },
-                      {
-                        name: 'Folder B',
-                        children: [{name: 'File B1'}, {name: 'File A2'}, {name: 'Folder BB', children: [{name: 'File BB1'}]}]
-                      },
-                    ]}
+              title="Choose Folder or File"
+              folders={[
+                {
+                  name: 'Folder A',
+                  children: [{name: 'File A1'}, {name: 'File A2'}, {name: 'Folder AA', children: [{name: 'File AA1'}]}]
+                },
+                {
+                  name: 'File 1'
+                },
+                {
+                  name: 'Folder B',
+                  children: [{name: 'File B1'}, {name: 'File A2'}, {name: 'Folder BB', children: [{name: 'File BB1'}]}]
+                },
+              ]}
             />
           </div>
   );
 }
 ```
 ### Advance
+
+advance example for show folder structure data with fetch from url
+
+![advance]
+
+```tsx
+import React, { Component } from 'react';
+import {DrillD} from 'react-drilld';
+
+function App() {
+  return (
+    <DrillD
+      title="Choose Category"
+      url="https://api.stlouisfed.org/fred/category/children"
+      mode="multiple"
+      showFullPath
+      isSelectableFolder
+      queryParams={{api_key: 'f8d2c84d4b22cefd6a6e1d5e78128c61', file_type: 'json'}}
+      selectFolderQueryParams={(folder: any) => ({category_id: folder?.id})}
+      fetchedChildrenDataPath={['categories']}
+      folderKey
+    />
+  );
+}
+```
 
 ---
 
@@ -132,5 +155,7 @@ Alex Reardon [@sinashahoveisi](https://sinasho.ir)
 [author]: https://github.com/sinashahoveisi
 
 [simple]: https://react-drilld.sinasho.ir/assets/simple.gif
+
+[advance]: https://react-drilld.sinasho.ir/assets/advance.gif
 
 [license]: license

@@ -34,14 +34,15 @@ export interface DrillDProps {
   mode?: 'single' | 'multiple';
   isSelectableFolder?: boolean;
   headerRequest?: HeadersInit;
+  queryParams?: object;
   selectFolderQueryParams?: (folder: any) => object;
   fetchedChildrenDataPath?: onAfterGetChildren | string[] | string;
   labelKey?: string[] | string;
   valueKey?: string[] | string;
-  folderKey?: checkIsFolder | string[] | string;
+  folderKey?: checkIsFolder | string[] | string | boolean;
   defaultValue?: FolderProps[];
   checkIsSelected?: (folder: any) => boolean;
-  onSave?: (selectedFolders: FolderProps[]) => void;
+  onSave?: (selectedFolders: FolderProps[] | FolderProps) => void;
   hasSearch?: boolean;
   searchQueryKey?: string;
 }
@@ -54,6 +55,7 @@ const DrillD: FC<DrillDProps> = ({
   showFullPath = false,
   backTitle = 'back',
   defaultValue,
+  queryParams,
   checkIsSelected,
   valueKey = 'id',
   labelKey = 'name',
@@ -93,16 +95,18 @@ const DrillD: FC<DrillDProps> = ({
       const fetchUrl = new URL(url);
       const queryFolder =
         search?.current?.length && searchQueryKey
-          ? {[searchQueryKey]: search?.current}
-          : selectFolderQueryParams(lodash.last(depth));
+          ? lodash.merge(queryParams || {}, {[searchQueryKey]: search?.current})
+          : lodash.merge(queryParams || {}, selectFolderQueryParams(lodash.last(depth)));
       lodash.forEach(lodash.entries(queryFolder), ([key, value]: [string, any]) => {
         if (!lodash.isNil(value)) fetchUrl.searchParams.append(key, value);
       });
       fetch(fetchUrl, {
-        headers: headerRequest
+        headers: headerRequest,
+        mode: 'no-cors'
       })
         .then((response) => response.json())
         .then((children: any) => {
+          console.log(children);
           const childrenFolder = lodash.isFunction(fetchedChildrenDataPath)
             ? fetchedChildrenDataPath(children)
             : lodash.get(children, fetchedChildrenDataPath);
@@ -153,7 +157,6 @@ const DrillD: FC<DrillDProps> = ({
   }, 1000);
 
   const onSaveChanges = () => {
-    console.log(selectFolders);
     if (lodash.isFunction(onSave)) onSave(selectFolders);
   };
 
@@ -189,6 +192,8 @@ const DrillD: FC<DrillDProps> = ({
           lodash.map(foldersChildren, (folder: FolderProps, index: number) => {
             const isFolder = lodash.isFunction(folderKey)
               ? folderKey(folder)
+              : lodash.isBoolean(folderKey)
+              ? folderKey
               : lodash.get(folder, folderKey) || folder?.children;
             return (
               <div key={index} className={clsx('folder-container', folderClassName)}>
@@ -207,7 +212,12 @@ const DrillD: FC<DrillDProps> = ({
                     />
                   )}
                   {isFolder ? <Folder /> : <Document />}
-                  <span>{lodash.get(folder, labelKey)}</span>
+                  <span
+                    onClick={() => {
+                      if (mode !== 'multiple' && !isSelectableFolder && onSave) onSave(folder);
+                    }}>
+                    {lodash.get(folder, labelKey)}
+                  </span>
                 </div>
                 {isFolder && (
                   <button type="button" onClick={() => pushToDepth(folder, index)}>
