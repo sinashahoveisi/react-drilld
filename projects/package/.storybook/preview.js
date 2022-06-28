@@ -2,7 +2,7 @@ export const parameters = {
   layout: 'centered',
   actions: { argTypesRegex: "^on[A-Z].*",
     storySort: {
-      order: ['Intro', 'Example', ['Simple', 'Mode']],
+      order: ['Intro', 'Example', ['Simple', 'Mode'], 'Advance', ['Simple', 'Mode']],
       locales: 'en-US',
     },
   },

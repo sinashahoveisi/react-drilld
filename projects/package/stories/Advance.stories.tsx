@@ -2,7 +2,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import DrillD from '../src/DrillD';
 
 export default {
-  title: 'Example/Simple',
+  title: 'Example/Advance',
   component: DrillD,
   args: {
     title: 'Choose Folder or File',
