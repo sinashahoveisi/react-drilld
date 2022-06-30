@@ -73,24 +73,24 @@ import {DrillD} from 'react-drilld';
 
 function App() {
   return (
-          <div className="App">
-            <DrillD
-              title="Choose Folder or File"
-              folders={[
-                {
-                  name: 'Folder A',
-                  children: [{name: 'File A1'}, {name: 'File A2'}, {name: 'Folder AA', children: [{name: 'File AA1'}]}]
-                },
-                {
-                  name: 'File 1'
-                },
-                {
-                  name: 'Folder B',
-                  children: [{name: 'File B1'}, {name: 'File A2'}, {name: 'Folder BB', children: [{name: 'File BB1'}]}]
-                },
-              ]}
-            />
-          </div>
+    <div className="App">
+      <DrillD
+        title="Choose Folder or File"
+        folders={[
+          {
+            name: 'Folder A',
+            children: [{name: 'File A1'}, {name: 'File A2'}, {name: 'Folder AA', children: [{name: 'File AA1'}]}]
+          },
+          {
+            name: 'File 1'
+          },
+          {
+            name: 'Folder B',
+            children: [{name: 'File B1'}, {name: 'File A2'}, {name: 'Folder BB', children: [{name: 'File BB1'}]}]
+          },
+        ]}
+      />
+    </div>
   );
 }
 ```
@@ -137,7 +137,7 @@ Check the [documentation](https://react-drilld.sinasho.ir/) to get you started!
 
 ## Creator
 
-Alex Reardon [@sinashahoveisi](https://sinasho.ir)
+Sina Shah Oveisi [@sinashahoveisi](https://sinasho.ir)
 
 > I love programming and I am interested in popular frameworks or programming languages and I am currently coding with JavaScript and React framework.
 

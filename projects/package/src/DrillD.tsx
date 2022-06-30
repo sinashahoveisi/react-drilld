@@ -23,6 +23,8 @@ export type onAfterGetChildren = (fetchedFoldersData: any) => Array<FolderProps>
 
 export type checkIsFolder = (folder: any) => boolean;
 
+export type urlByDepth = (depth?: FolderDepthProps[]) => string;
+
 export interface DrillDProps {
   title?: string;
   folders?: FolderProps[];
@@ -30,7 +32,8 @@ export interface DrillDProps {
   folderClassName?: string;
   containerClassName?: string;
   backTitle?: string;
-  url?: string;
+  url?: string | string[] | urlByDepth;
+  maxDepth?: number;
   mode?: 'single' | 'multiple';
   isSelectableFolder?: boolean;
   headerRequest?: HeadersInit;
@@ -53,6 +56,7 @@ const DrillD: FC<DrillDProps> = ({
   folderClassName,
   containerClassName,
   showFullPath = false,
+  maxDepth = Infinity,
   backTitle = 'back',
   defaultValue,
   queryParams,
@@ -92,7 +96,13 @@ const DrillD: FC<DrillDProps> = ({
 
   useEffect(() => {
     if (url && (!foldersChildren?.length || search?.current?.length || search?.current === null)) {
-      const fetchUrl = new URL(url);
+      const fetchUrl = new URL(
+        lodash.isString(url)
+          ? url
+          : lodash.isFunction(url)
+          ? url(depth)
+          : lodash.get(url, depth?.length || url?.length - 1)
+      );
       const queryFolder =
         search?.current?.length && searchQueryKey
           ? lodash.merge(queryParams || {}, {[searchQueryKey]: search?.current})
@@ -190,11 +200,14 @@ const DrillD: FC<DrillDProps> = ({
           <Spinner />
         ) : (
           lodash.map(foldersChildren, (folder: FolderProps, index: number) => {
-            const isFolder = lodash.isFunction(folderKey)
-              ? folderKey(folder)
-              : lodash.isBoolean(folderKey)
-              ? folderKey
-              : lodash.get(folder, folderKey) || folder?.children;
+            const isFolder =
+              maxDepth > (depth?.length || 0)
+                ? lodash.isFunction(folderKey)
+                  ? folderKey(folder)
+                  : lodash.isBoolean(folderKey)
+                  ? folderKey
+                  : lodash.get(folder, folderKey) || folder?.children
+                : false;
             return (
               <div key={index} className={clsx('folder-container', folderClassName)}>
                 <div className="folder-name">

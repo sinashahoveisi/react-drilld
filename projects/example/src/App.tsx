@@ -41,6 +41,17 @@ function App() {
         {/*    }*/}
         {/*  ]}*/}
         {/*/>*/}
+        {/*<DrillD*/}
+        {/*  title="Choose Category"*/}
+        {/*  url="https://api.stlouisfed.org/fred/category/children"*/}
+        {/*  mode="multiple"*/}
+        {/*  showFullPath*/}
+        {/*  isSelectableFolder*/}
+        {/*  queryParams={{api_key: 'f8d2c84d4b22cefd6a6e1d5e78128c61', file_type: 'json'}}*/}
+        {/*  selectFolderQueryParams={(folder: any) => ({category_id: folder?.id})}*/}
+        {/*  fetchedChildrenDataPath={['categories']}*/}
+        {/*  folderKey*/}
+        {/*/>*/}
         <DrillD
           title="Choose Category"
           url="https://api.stlouisfed.org/fred/category/children"
