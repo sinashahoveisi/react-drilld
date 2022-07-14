@@ -158,4 +158,4 @@ Sina Shah Oveisi [@sinashahoveisi](https://sinasho.ir)
 
 [advance]: https://react-drilld.sinasho.ir/assets/advance.gif
 
-[license]: license
+[license]: https://github.com/sinashahoveisi/react-drilld/blob/master/LICENSE
